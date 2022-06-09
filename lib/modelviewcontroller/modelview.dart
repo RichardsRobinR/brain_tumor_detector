@@ -5,6 +5,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:sn_progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
 class ApiViewModel extends ChangeNotifier {
 
@@ -12,15 +14,106 @@ class ApiViewModel extends ChangeNotifier {
   RightContentStatus get rightContentState => _rightContentState;
 
 
-  bool _imageButtonState = false;
-  bool get imageButtonState => _imageButtonState;
 
-  String _selectedImagePath = "assets/cover.jpg";
+
+  //String _selectedImagePath = "assets/cover.jpg";
   //String _selectedImagePath = "https://media.istockphoto.com/vectors/sample-sign-sample-square-speech-bubble-sample-vector-id1161352480?k=20&m=1161352480&s=612x612&w=0&h=uVaVErtcluXjUNbOuvGF2_sSib9dZejwh4w8CwJPc48=" ;
-  //String? _selectedImagePath;
+  String? _selectedImagePath = "";
   String? get selectedImagePath => _selectedImagePath;
 
+  double _opacityValue = 1.0;
+  double get opacityValue => _opacityValue;
+
+  bool _imageDisplayValue = false;
+  bool get imageDisplayValue => _imageDisplayValue;
+
+  bool _resultContainerState = false;
+  bool get resultContainerState => _resultContainerState;
+
+  String _predicationresult =  'test';
+  String get predicationresult => _predicationresult;
+
+
+  setOpacityValue(bool isHover) {
+    if(isHover) {
+      _opacityValue = 0.8;
+    }
+    else {
+      _opacityValue = 1.0;
+    }
+
+     notifyListeners();
+  }
+
+
+
   final ImagePicker _picker = ImagePicker();
+
+  valuableProgress(BuildContext context) async {
+    ProgressDialog pd = ProgressDialog(context: context);
+
+    pd.show(
+      max: 100,
+      msg: 'Image Uploading...',
+
+      /// Assign the type of progress bar.
+      progressType: ProgressType.valuable,
+    );
+
+    if (pd.isOpen()) {
+      print("open");
+      _imageDisplayValue = false;
+      // _rightContentState = RightContentStatus.predict;
+    }
+    for (int i = 0; i <= 100; i++) {
+      pd.update(value: i);
+      i++;
+      if (i == 99) {
+        pd.close();
+      }
+      await Future.delayed(Duration(milliseconds: 100));
+    }
+    if (!pd.isOpen()) {
+      print("closed");
+      _imageDisplayValue = true;
+     // _rightContentState = RightContentStatus.predict;
+    }
+
+    notifyListeners();
+  }
+
+
+  predicatingValuableProgress(BuildContext context) async {
+    ProgressDialog pd = ProgressDialog(context: context);
+
+    pd.show(
+      max: 100,
+      msg: 'Image Uploading...',
+
+      /// Assign the type of progress bar.
+      progressType: ProgressType.valuable,
+    );
+
+    retreiveResultFromFirestore();
+
+    for (int i = 0; i <= 100; i++) {
+      pd.update(value: i);
+      i++;
+      if (i == 99) {
+        pd.close();
+      }
+      await Future.delayed(Duration(milliseconds: 100));
+
+      if (!pd.isOpen()) {
+        print("closed");
+        _resultContainerState = true;
+        // _rightContentState = RightContentStatus.predict;
+      }
+    }
+
+
+    notifyListeners();
+  }
 
   void changeRightContentState(RightContentStatus rightContentStatus) {
     _rightContentState = rightContentStatus;
@@ -29,15 +122,26 @@ class ApiViewModel extends ChangeNotifier {
 
   }
 
-  Future getImagefromGallery() async {
+  Future getImagefromGallery(context) async {
+
     // Pick an image
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    print("after it");
+    valuableProgress(context);
 
     _selectedImagePath = image!.path;
+
+    uploadImage();
+
     //notifyListeners();
   }
 
   void uploadImage() async {
+
+    // changing the state of the imagedisplay value
+
+
+
     // Create a storage reference from our app
     final storageRef = FirebaseStorage.instance.ref();
 
@@ -66,19 +170,32 @@ class ApiViewModel extends ChangeNotifier {
 
   }
 
-  updatefirestoreState(String imagefirebaseurl) {
+  updateFirestoreState() {
 
     FirebaseFirestore db = FirebaseFirestore.instance;
 
-    final imageState = <String, String>{
-      "imageurl": imagefirebaseurl,
-
+    final state = <String, String>{
+      "predicationresult": "Pending",
     };
 
     db.collection("result")
         .doc("output")
-        .set(imageState)
+        .set(state)
         .onError((e, _) => print("Error writing document: $e"));
+
+  }
+
+  retreiveResultFromFirestore() async {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+
+    await db.collection("result").doc("output").get().then((event) {
+
+      _predicationresult = event["predicationresult"];
+      print(_predicationresult);
+
+    });
+
+    notifyListeners();
   }
 
 
@@ -104,6 +221,13 @@ class ApiViewModel extends ChangeNotifier {
 
   void changeRightStatus() {
     RightContentStatus.imageSelect;
+
+  }
+
+  resetToDefault() {
+    updateFirestoreState();
+    _imageDisplayValue = false;
+    _resultContainerState = false;
 
   }
 

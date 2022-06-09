@@ -2,9 +2,6 @@
 <html>
 <head>
   <style>
-      body{
-<!--      background-color: rgb(12, 12, 12);-->
-      }
 
       .container {
         width: 200px;
@@ -33,13 +30,13 @@
 
   @keyframes progresswave {
       from {
-          border: var(--pwb) rgba(255, 255, 255, .5) solid;
+          border: var(--pwb) rgba(0, 0, 0, .5) solid;
           width: calc(var(--pwb) * 2);
           height: calc(var(--pwb) * 2);
           border-radius: calc(var(--pwb) * 2);
       }
       to {
-          border: var(--pwb) rgba(255, 255, 255, 0) solid;
+          border: var(--pwb) rgba(0, 0, 0, 0) solid;
           width: var(--pwd);
           height: var(--pwd);
           border-radius: var(--pwd);
@@ -111,7 +108,7 @@
     window.addEventListener('load', function(ev) {
 
       var loading = document.querySelector('.container');
-      loading.style.display;
+
 
 
       // Download main.dart.js
@@ -123,7 +120,7 @@
 
         return engineInitializer.initializeEngine();
       }).then(function(appRunner) {
-
+        loading.style.display;
         return appRunner.runApp();
       });
     });
