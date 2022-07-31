@@ -1,3 +1,4 @@
+import 'package:brain_tumor_detector/widgetsdesktop/aboutcontent.dart';
 import 'package:brain_tumor_detector/widgetsdesktop/centeredview.dart';
 import 'package:flutter/material.dart';
 
@@ -13,20 +14,32 @@ class NavigationBarDesktop extends StatelessWidget {
 
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            SizedBox(
-              height: 80,
-              width: 150,
-              child: Image.asset('cover.jpg'),
-            ),
+          children: [
+            // SizedBox(
+            //   height: 80,
+            //   width: 150,
+            //   child:
+            //   // Image.asset('cover.jpg'),
+            //
+            //
+            // ),
+            const Text("Brain Tumor Detection",style: TextStyle(
+              fontSize: 30,fontWeight: FontWeight.bold
+            ),),
             Row(
               mainAxisSize: MainAxisSize.min,
-              children: const <Widget>[
-                _NavBarItem(title: "Episodes",),
-                SizedBox(
+              children: [
+                const _NavBarItem(title: "",),
+                const SizedBox(
                   width: 60,
                 ),
-                _NavBarItem(title: 'About',),
+                InkWell(
+                  onTap: () {
+                    showDialog(context: context, builder: (BuildContext context) {
+                      return About();
+                    });
+                  },
+                    child: _NavBarItem(title: 'About',)),
               ],
             )
           ],

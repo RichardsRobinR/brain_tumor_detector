@@ -18,15 +18,15 @@ class _LeftContentState extends State<LeftContent> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: const <Widget>[
           Text(
-            'FLUTTER WEB.\nTHE BASICS',
+            "Don't give up.\nEvery day is WORTH it.",
             style: TextStyle(
-                fontWeight: FontWeight.w800, fontSize: 80, height: 0.9),
+                fontWeight: FontWeight.w800, fontSize: 100,),
           ),
           SizedBox(
             height: 30,
           ),
           Text(
-            'In this course we will go over the basics of using Flutter Web for website development.',
+            '',
             style: TextStyle(fontSize: 18, height: 1.7),
           ),
         ],

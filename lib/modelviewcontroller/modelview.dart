@@ -30,7 +30,7 @@ class ApiViewModel extends ChangeNotifier {
   bool _resultContainerState = false;
   bool get resultContainerState => _resultContainerState;
 
-  String _predicationresult =  'test';
+  String _predicationresult =  'Pending';
   String get predicationresult => _predicationresult;
 
 
@@ -88,7 +88,7 @@ class ApiViewModel extends ChangeNotifier {
 
     pd.show(
       max: 100,
-      msg: 'Image Uploading...',
+      msg: 'Predicting...',
 
       /// Assign the type of progress bar.
       progressType: ProgressType.valuable,
@@ -102,7 +102,7 @@ class ApiViewModel extends ChangeNotifier {
       if (i == 99) {
         pd.close();
       }
-      await Future.delayed(Duration(milliseconds: 100));
+      await Future.delayed(Duration(milliseconds: 250));
 
       if (!pd.isOpen()) {
         print("closed");
@@ -205,7 +205,7 @@ class ApiViewModel extends ChangeNotifier {
   callFlaskApi() async {
 
     try {
-      var url = Uri.parse('http://127.0.0.1:5000/modelpredict/');
+      var url = Uri.parse('https://braintumorflaskserver.herokuapp.com/modelpredict/');
       var response = await http.post(url,
         // body:{
         //   "imgurl": imagefirebaseurl,
@@ -225,9 +225,11 @@ class ApiViewModel extends ChangeNotifier {
   }
 
   resetToDefault() {
-    updateFirestoreState();
+    //updateFirestoreState();
+    _predicationresult = "Pending..";
     _imageDisplayValue = false;
     _resultContainerState = false;
+    //notifyListeners();
 
   }
 

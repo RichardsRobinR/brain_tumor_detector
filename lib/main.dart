@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:brain_tumor_detector/homepage.dart';
+import 'package:brain_tumor_detector/widgetsdesktop/aboutcontent.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';

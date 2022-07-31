@@ -25,20 +25,11 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return linux;
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -71,5 +62,33 @@ class DefaultFirebaseOptions {
     storageBucket: 'brain-tumor-detector-6be52.appspot.com',
     iosClientId: '130383918562-lsfh2nkv5eicm56pakjjun409a360mch.apps.googleusercontent.com',
     iosBundleId: 'com.redwolf.brainTumorDetector',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBfvbLN7tLX1WzzTPxGbAviKFCQKS-VdwQ',
+    appId: '1:130383918562:ios:65bbc9fef682cdaea8f5bb',
+    messagingSenderId: '130383918562',
+    projectId: 'brain-tumor-detector-6be52',
+    storageBucket: 'brain-tumor-detector-6be52.appspot.com',
+    iosClientId: '130383918562-lsfh2nkv5eicm56pakjjun409a360mch.apps.googleusercontent.com',
+    iosBundleId: 'com.redwolf.brainTumorDetector',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBaBdap1BjftQiRdniZ5AQ6jkqcAfHu2SQ',
+    appId: '1:130383918562:web:2c5bf46dae899f28a8f5bb',
+    messagingSenderId: '130383918562',
+    projectId: 'brain-tumor-detector-6be52',
+    authDomain: 'brain-tumor-detector-6be52.firebaseapp.com',
+    storageBucket: 'brain-tumor-detector-6be52.appspot.com',
+  );
+
+  static const FirebaseOptions linux = FirebaseOptions(
+    apiKey: 'AIzaSyBaBdap1BjftQiRdniZ5AQ6jkqcAfHu2SQ',
+    appId: '1:130383918562:web:947a4cf79ddc82f5a8f5bb',
+    messagingSenderId: '130383918562',
+    projectId: 'brain-tumor-detector-6be52',
+    authDomain: 'brain-tumor-detector-6be52.firebaseapp.com',
+    storageBucket: 'brain-tumor-detector-6be52.appspot.com',
   );
 }
