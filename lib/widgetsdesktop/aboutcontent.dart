@@ -11,18 +11,31 @@ class About extends StatelessWidget {
       title: const Text('About'),
       content: Container(
         width: 600,
-        color: Colors.red,
+        height: 125,
+        //color: Colors.red,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             CircleAvatar(
-              backgroundImage: Image.asset("C:/Users/richa/AndroidStudioProjects/brain_tumor_detector/assets/cover.jpg").image,
+              backgroundImage: Image.asset("assets/cover.jpg").image,
               maxRadius: 50,
             ),
-            const Text("Richards Robin R", style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold
-            ),),
+
+            Column(
+            //mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text("Richards Robin R", style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+
+                ),),
+                SizedBox(height: 20,),
+                aboutdetails("Email ID : ", "richardsrobin.r15@gmail.com"),
+                aboutdetails("Github : ", "https://github.com/RichardsRobinR"),
+
+              ],
+            ),
 
           ],
         ),
@@ -37,6 +50,22 @@ class About extends StatelessWidget {
       ],
     );
   }
+
+  Widget aboutdetails(key,value) {
+    return Row(
+      children: [
+        Text(key, style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+        ),),
+        Text(value, style: const TextStyle(
+          fontSize: 20,
+        ),)
+      ],
+    );
+  }
+
 }
+
 
 
